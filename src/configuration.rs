@@ -23,3 +23,18 @@ pub fn get_configuration() -> Result<Settings, config::ConfigError> {
 
     settings.try_deserialize::<Settings>()
 }
+
+impl DatabaseSettings {
+    pub fn conn_str(&self) -> String {
+        format!(
+            "postgres://{}:{}@{}/{}",
+            self.username, self.password, self.host, self.name
+        )
+    }
+    pub fn conn_str_base(&self) -> String {
+        format!(
+            "postgres://{}:{}@{}",
+            self.username, self.password, self.host
+        )
+    }
+}
